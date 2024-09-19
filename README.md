@@ -1,23 +1,23 @@
 
 
-### `doctl`
+## `doctl`
 ---
-#### what is doctl? 
+### what is `doctl`? 
 `doctl` is the official Digital Ocean command-line (CLI)
 
 [note] CLI is text-base interface that allow user to interact with operate system
-##### what Does it do?
+### what Does it do?
 it allow user to interact with the Digital Ocean *API* via command line. User can create, configure, and destroy DigitalOcean resources like Droplets, Kubernetes clusters, firewalls, load balancers, database clusters, domains, and more.
 
-##### why use `doctl`?
+### why use `doctl`?
 `about CLI`
 
 
-#### How to install `doctl` 
+## How to install `doctl` 
 ---
 this is a step by step of how to install doctl via CMD on the Window OS 
 
-##### Step 1 download `doctl` 
+### Step 1 download `doctl` 
 0. open **terminal** 
 1. run the following command to download the most recent version of doctl or go to [Releases · digitalocean/doctl (github.com)](https://github.com/digitalocean/doctl/releases)
 ```powershell
@@ -48,7 +48,7 @@ Expand-Archive -Path ~\doctl-1.110.0-windows-amd64.zip
 	```
 
 note : make sure that if you are using window download the file that is name `doctl-version-windows-architechure-zip`)
-##### Step 2: Create an API token 
+### Step 2: Create an API token 
 1.  go to [DigitalOcean | Cloud Infrastructure for Developers](https://www.digitalocean.com/) then login or signup 
 
 2. on the home page click **API** ![[Pasted image 20240917185310.png]]
@@ -67,7 +67,7 @@ note : make sure that if you are using window download the file that is name `do
 4. copy the the token (warning! token only show once)
 ![[Pasted image 20240917192752.png]]
 
-#### Step 3 : Authenticate `doctl` by using  API 
+### Step 3 : Authenticate `doctl` by using  API 
 
 1. open **powershell app**
 2. to Initializes authentication and give the authentication name
@@ -78,16 +78,16 @@ doctl auth init --context <NAME>
 
 note : you can add multiple account and switch authentication account by using `doctl auth switch --context <NAME>` and `doctl auth list` to see the list of authentication you have
 
-##### to Confirm `doctl` is working
+### to Confirm `doctl` is working
 
 after run the authentication, run `doctl account get`. The result should look like this: 
 ![[Pasted image 20240917195939.png]]
 
 
 
-### Create Droplet using `doctl`
+## Create Droplet using `doctl`
 ---
-##### to upload the custom image 
+### to upload the custom image 
 1. open **power shell**
 2. to access digital ocean account, run :
 ```powershell
@@ -98,7 +98,7 @@ doctl auth init your_profile_name
 doctl compute image create <image-name> [flags]
 ```
 additional commands (flags)
-	- `<image-name>` name your image
+- `<image-name>` name your image
 	- `[flags]` additional commands(optional)
 		- `--image-url` URL of the image file.
 		- `--region` is a flag used to specify the region.
@@ -111,7 +111,7 @@ doctl compute image create  arch_linux --image-url https://gitlab.archlinux.org/
 
 
 
-##### to create Droplet 
+### to create Droplet 
 1. open **power shell**
 2. to create droplet run:
 ``` bash
@@ -123,7 +123,7 @@ additional commands
 	note : you may require to add SSH using additional command : `--ssh-keys <keyid>`, since image might require the SSH key
 
 
-##### Additional commands 
+### Additional commands 
 - `doctl compute image list` show the list of images 
 - `doctl compute droplet list` show the list of droplet 
 - `doctl compute droplet delete <dropletID>` delete droplet 
