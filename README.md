@@ -38,14 +38,14 @@ Expand-Archive -Path ~\doctl-1.110.0-windows-amd64.zip
 	Move-Item -Path ~\doctl-1.110.0-windows-amd64\doctl.exe -Destination 
 	```
 	3. add set the environment path, ``````
-		``` powershell
-		[Environment]::SetEnvironmentVariable(
-		    "Path",
-		    [Environment]::GetEnvironmentVariable("Path",
-		    [EnvironmentVariableTarget]::Machine) + ";$env:ProgramFiles\doctl\",
-		    [EnvironmentVariableTarget]::Machine)
-		$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
-		```
+	``` powershell
+	[Environment]::SetEnvironmentVariable(
+		"Path",
+		[Environment]::GetEnvironmentVariable("Path",
+		[EnvironmentVariableTarget]::Machine) + ";$env:ProgramFiles\doctl\",
+		[EnvironmentVariableTarget]::Machine)
+	$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
+	```
 
 note : make sure that if you are using window download the file that is name `doctl-version-windows-architechure-zip`)
 ##### Step 2: Create an API token 
@@ -71,7 +71,7 @@ note : make sure that if you are using window download the file that is name `do
 
 1. open **powershell app**
 2. to Initializes authentication and give the authentication name
-``` bash 
+``` powershell 
 doctl auth init --context <NAME>
 ```
 3. then paste the token that you copy from API page
@@ -90,12 +90,12 @@ after run the authentication, run `doctl account get`. The result should look li
 ##### to upload the custom image 
 1. open **power shell**
 2. to access digital ocean account, run :
-```bash
-	doctl auth init your_profile_name
+```powershell
+doctl auth init your_profile_name
 ```
 3. to add the custom image
-	```
-	doctl compute image create <image-name> [flags]
+	```powershell
+doctl compute image create <image-name> [flags]
 	```
 	- `<image-name>` name your image
 	- `[flags]` additional commands(optional)
@@ -104,7 +104,7 @@ after run the authentication, run `doctl account get`. The result should look li
 		- `--description` is a flag used to provide a description of the image.
 	command `doctl compute create` require `--region, --image-url`
 example
-```bash 
+```powershell 
 doctl compute image create  arch_linux --image-url https://gitlab.archlinux.org/archlinux/arch-boxes/-/package_files/7527/download --region nyc1
 ```
 
