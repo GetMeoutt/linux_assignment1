@@ -94,9 +94,10 @@ after run the authentication, run `doctl account get`. The result should look li
 doctl auth init your_profile_name
 ```
 3. to add the custom image
-	```powershell
+```
 doctl compute image create <image-name> [flags]
-	```
+```
+additional commands (flags)
 	- `<image-name>` name your image
 	- `[flags]` additional commands(optional)
 		- `--image-url` URL of the image file.
@@ -113,9 +114,10 @@ doctl compute image create  arch_linux --image-url https://gitlab.archlinux.org/
 ##### to create Droplet 
 1. open **power shell**
 2. to create droplet run:
-	``` bash
+``` bash
 doctl compute droplet create <name> --image <image> --size <size>
-	```
+```
+additional commands
 	- `<image>` is ID or slug of the image
 	- `<size>` is the size of the VCPU and ram in form of `s-[number]vcpu-[number]gb`
 	note : you may require to add SSH using additional command : `--ssh-keys <keyid>`, since image might require the SSH key
