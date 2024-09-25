@@ -1,12 +1,16 @@
 
 
+
+
+
 ## `doctl`
 ---
-### what is `doctl`? 
+### What is `doctl`? 
 `doctl` is the official Digital Ocean command-line (CLI)
 
-[note] CLI is text-base interface that allow user to interact with operate system
-### what Does it do?
+>[!note]
+> CLI is text-base interface that allow user to interact with operate system
+### What Does it do?
 it allow user to interact with the Digital Ocean *API* via command line. User can create, configure, and destroy DigitalOcean resources like Droplets, Kubernetes clusters, firewalls, load balancers, database clusters, domains, and more.
 
 ### why use `doctl`?
@@ -15,39 +19,39 @@ it allow user to interact with the Digital Ocean *API* via command line. User ca
 
 ## How to install `doctl` 
 ---
-this is a step by step of how to install doctl via CMD on the Window OS 
+this is step by step of how to install `doctl` on arch_linux
 
-### Step 1 download `doctl` 
-0. open **terminal** 
-1. run the following command to download the most recent version of doctl or go to [Releases · digitalocean/doctl (github.com)](https://github.com/digitalocean/doctl/releases)
-```powershell
-Invoke-WebRequest https://github.com/digitalocean/doctl/releases/download/v1.110.0/doctl-1.110.0-windows-amd64.zip -OutFile ~\doctl-1.110.0-windows-amd64.zip
+
+### Step 1 Download `doctl` with `wget`
+
+1. download `wget` package 
+```bash 
+sudo pacman -Sy wget
 ```
-2. extract the file, by running 
-```powershell
-Expand-Archive -Path ~\doctl-1.110.0-windows-amd64.zip
+1. download `doctl` using `wget`
+```bash
+cd ~
+wget https://github.com/digitalocean/doctl/releases/download/v1.110.0/doctl-1.110.0-linux-amd64.tar.gz
+```
+3. extract the file (binary) 
+```bash
+tar xf ~/doctl-1.110.0-linux-amd64.tar.gz
+```
+4. move file(binary) to the path (bin)
+```bash
+sudo mv ~/doctl /usr/local/bin
 ```
 
-4. open **terminal** in administrator and running the following command to 
-	1. create a  directory in program file folder, 
-	``` powershell
-	New-Item -ItemType Directory $env:ProgramFiles\doctl\
-	```
-	2. move the unpack file to the new directory
-	``` powershell
-	Move-Item -Path ~\doctl-1.110.0-windows-amd64\doctl.exe -Destination 
-	```
-	3. add set the environment path, ``````
-	``` powershell
-	[Environment]::SetEnvironmentVariable(
-		"Path",
-		[Environment]::GetEnvironmentVariable("Path",
-		[EnvironmentVariableTarget]::Machine) + ";$env:ProgramFiles\doctl\",
-		[EnvironmentVariableTarget]::Machine)
-	$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
-	```
+commands
 
-note : make sure that if you are using window download the file that is name `doctl-version-windows-architechure-zip`)
+
+
+- what is bianary
+- what pacman 
+- what is wget 
+
+
+
 ### Step 2: Create an API token 
 1.  go to [DigitalOcean | Cloud Infrastructure for Developers](https://www.digitalocean.com/) then login or signup 
 
@@ -69,14 +73,16 @@ note : make sure that if you are using window download the file that is name `do
 
 ### Step 3 : Authenticate `doctl` by using  API 
 
-1. open **powershell app**
-2. to Initializes authentication and give the authentication name
+
+1. to Initializes authentication and give the authentication name
 ``` powershell 
 doctl auth init --context <NAME>
 ```
-3. then paste the token that you copy from API page
+2. then paste the token that you copy from API page
 
-note : you can add multiple account and switch authentication account by using `doctl auth switch --context <NAME>` and `doctl auth list` to see the list of authentication you have
+>[!note] to add multiple API
+you can add multiple account and switch authentication account by using `doctl auth switch --context <NAME>` and `doctl auth list` to see the list of authentication you have
+
 
 ### to Confirm `doctl` is working
 
@@ -85,15 +91,57 @@ after run the authentication, run `doctl account get`. The result should look li
 
 
 
+
+
+
+## SSH-key 
+---
+what is `SSH-Key`?
+
+
+
+
+
+### How to create SSH-KEY in Linux 
+ 1. to create a SSH key use command
+```bash
+`ssh-keygen -t ed25519 -f ~/.ssh/doctlkey -C "commet"
+```
+2. type the passphrase (password )for this  key (can be leave it empty)
+
+- command ssh-keygen : create key
+- -t type for encryption
+- -f filename (directory)
+- -C comment
+
+### Upload Public Keys to `doctl`
+to create a droplet using automate configuration (ex .clound-init), it require SSH public key to be accessible to the droplet at the application. 
+
+1. by running the command, 
+```bash
+doctl compute ssh-key import git-user --public-key-file /Users/example-user/.ssh/git-user.pub
+
+```
+base commands
+`doctl compute ssh-key import [key-name] --public-key-file [path]`
+commands
+- `doctl compute ssh-key import `  add ssh-key to Digital Ocean account
+- `--public-key-file` : path to public 
+
+2. check if the ssh-key is imported to Digital Ocean 
+```bash 
+doctl compute ssh-key list
+```
+the command will print the list of ssh-key in Digital Ocean
+
+
+
+
+
 ## Create Droplet using `doctl`
 ---
 ### to upload the custom image 
-1. open **power shell**
-2. to access digital ocean account, run :
-```powershell
-doctl auth init your_profile_name
-```
-3. to add the custom image
+to add the custom image
 ```
 doctl compute image create <image-name> [flags]
 ```
@@ -105,25 +153,80 @@ additional commands (flags)
 		- `--description` is a flag used to provide a description of the image.
 	command `doctl compute create` require `--region, --image-url`
 example
-```powershell 
+```bash
 doctl compute image create  arch_linux --image-url https://gitlab.archlinux.org/archlinux/arch-boxes/-/package_files/7527/download --region nyc1
 ```
 
 
 
-### to create Droplet 
-1. open **power shell**
-2. to create droplet run:
+### Create Normal Droplet 
+1. to create droplet run:
 ``` bash
-doctl compute droplet create <name> --image <image> --size <size>
+doctl compute droplet create <name> --image <image> --size <size> --region <region>
 ```
 additional commands
-	- `<image>` is ID or slug of the image
-	- `<size>` is the size of the VCPU and ram in form of `s-[number]vcpu-[number]gb`
+- `--image` is ID or slug of the image
+- `--size` is the size of the VCPU and ram in form of `s-[number]vcpu-[number]gb`
+- `--region` is the region where you want to create droplet, it should close to the end user
 	note : you may require to add SSH using additional command : `--ssh-keys <keyid>`, since image might require the SSH key
+	
 
 
-### Additional commands 
+### Create Config File For Clound Init
+1. on **CLI** create file .yaml (can be anywhere)
+```bash
+nvim config.ymal
+```
+2. the content of config.ymal 
+```ymal
+#cloud-config
+users:
+  - name: user-name #change me
+    primary_group: group-name #change me
+    groups: wheel
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-ed25519 ...
+packages:
+  - ripgrep
+  - rsync
+  - neovim
+  - fd
+  - less
+  - man-db
+  - bash-completion
+  - tmux
+disable_root: true
+```
+3. save and quit `:wq` 
+
+
+### Create Arch Linux Droplet with Clound-init (require .ymal)
+1. get the image id of archlinux
+```bash
+doctl compute image list
+```
+2. get the ssh-key id 
+```
+doctl compute ssh-key list
+```
+3. create droplet 
+```bash
+doctl compute droplet create --image 165084678 --size s-1vcpu-1gb --region sfo3 --ssh-keys 43495109 --user-data-file ~/.ssh/droplet_setting.yaml --wait assignment1
+```
+commands 
+- `doctl compute droplet create` cerate droplet
+- `--image` is ID or slug of the image
+- `--size` is the size of the VCPU and ram in form of `s-[number]vcpu-[number]gb`
+- `--region` is the region where you want to create droplet, it should close to the end user
+	note : you may require to add SSH using additional command : `--ssh-keys <keyid>`, since image might require the SSH key
+- `--user-data-file` is the path to config file (ymal)
+- `--wait` is the name of the dropet. you can create multiple droplet by add multiple name  
+	ex `--wait assignment1 assignment2 `
+
+
+### Useful commands 
 - `doctl compute image list` show the list of images 
 - `doctl compute droplet list` show the list of droplet 
 - `doctl compute droplet delete <dropletID>` delete droplet 
@@ -133,7 +236,7 @@ additional commands
 
 
 
-### source
+### Source
 ---
 
 SolarWinds. (n.d.). _Using journalctl: The ultimate guide to logging_. Loggly. [https://www.loggly.com/ultimate-guide/using-journalctl/](https://www.loggly.com/ultimate-guide/using-journalctl/)
@@ -149,3 +252,8 @@ SolarWinds. (n.d.). _Using journalctl: The ultimate guide to logging_. Loggly. [
 [doctl compute droplet | DigitalOcean Documentation](https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/)
 
 [doctl compute droplet create | DigitalOcean Documentation](https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/create/)
+
+[Installing snap on Arch Linux | Snapcraft documentation](https://snapcraft.io/docs/installing-snap-on-arch-linux)
+
+[How to Automate Droplet Setup with cloud-init | DigitalOcean Documentation](https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/)
+
