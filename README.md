@@ -3,23 +3,28 @@
 
 
 
-## `doctl`
+## About `doctl`
 ---
-### What is `doctl`? 
+### What Is `doctl`? 
 `doctl` is the official Digital Ocean command-line (CLI)
 
 >[!note]
 > CLI is text-base interface that allow user to interact with operate system
-### What Does it do?
-it allow user to interact with the Digital Ocean *API* via command line. User can create, configure, and destroy DigitalOcean resources like Droplets, Kubernetes clusters, firewalls, load balancers, database clusters, domains, and more.
 
-### why use `doctl`?
-`about CLI`
+
+### What Does it do?
+it allows user to interact with the Digital Ocean API via command line interface. User can create, configure, and destroy Digital Ocean resources like Droplets, Kubernetes clusters, firewalls, load balancers, database clusters, domains, and more.
+
+
+
+### Why Use `doctl`?
+ ``doctl``  allows experienced user to manage faster than go through the web interface. With `doctl`, system administrators can automate competitive task, which is helpful for scaling infrastructure. Moreover, `doctl` is command line interface, it reduce the resource that hardware will use, making it less resource intensive. 
+
 
 
 ## How to install `doctl` 
 ---
-this is step by step of how to install `doctl` on arch_linux
+this is step by step of how to install `doctl` on Arch Linux
 
 
 ### Step 1 Download `doctl` with `wget`
@@ -28,7 +33,7 @@ this is step by step of how to install `doctl` on arch_linux
 ```bash 
 sudo pacman -Sy wget
 ```
-1. download `doctl` using `wget`
+2.  download `doctl` using `wget`
 ```bash
 cd ~
 wget https://github.com/digitalocean/doctl/releases/download/v1.110.0/doctl-1.110.0-linux-amd64.tar.gz
@@ -43,12 +48,16 @@ sudo mv ~/doctl /usr/local/bin
 ```
 
 commands
-
-
-
-- what is bianary
-- what pacman 
-- what is wget 
+- `sudo` temporarily elevates privileges 
+- `pacman` is package manager (collection of software tool)
+- `sudo pacman -Sy wget`
+	- `S` sync to install package
+	- `y` to update package 
+	- `wget` is package name, and it used from downloading file from the web
+- `cd` change directory
+	- '~' home directory 
+- `tar` (tape archive) create archive file and extract archive file
+- `mv` move, is to move files and directories to other directory or rename it 
 
 
 
@@ -68,17 +77,20 @@ commands
 		- full scope : grant all permission
 	
 ![[Pasted image 20240917190812.png|450]]
+
 4. copy the the token (warning! token only show once)
 ![[Pasted image 20240917192752.png]]
 
 ### Step 3 : Authenticate `doctl` by using  API 
 
-
 1. to Initializes authentication and give the authentication name
 ``` powershell 
-doctl auth init --context <NAME>
+doctl auth init --context token1
 ```
-2. then paste the token that you copy from API page
+- `doctl auth init` authenticate the account with token
+- `--context` take one argument of token name
+
+2. paste the token
 
 >[!note] to add multiple API
 you can add multiple account and switch authentication account by using `doctl auth switch --context <NAME>` and `doctl auth list` to see the list of authentication you have
@@ -86,11 +98,8 @@ you can add multiple account and switch authentication account by using `doctl a
 
 ### to Confirm `doctl` is working
 
-after run the authentication, run `doctl account get`. The result should look like this: 
+after run the authentication, run `doctl account get`. The result should look like this: <br>
 ![[Pasted image 20240917195939.png]]
-
-
-
 
 
 
@@ -159,7 +168,7 @@ doctl compute image create  arch_linux --image-url https://gitlab.archlinux.org/
 
 
 
-### Create Normal Droplet 
+### Create Droplet 
 1. to create droplet run:
 ``` bash
 doctl compute droplet create <name> --image <image> --size <size> --region <region>
@@ -217,12 +226,11 @@ doctl compute droplet create --image 165084678 --size s-1vcpu-1gb --region sfo3 
 ```
 commands 
 - `doctl compute droplet create` cerate droplet
-- `--image` is ID or slug of the image
-- `--size` is the size of the VCPU and ram in form of `s-[number]vcpu-[number]gb`
-- `--region` is the region where you want to create droplet, it should close to the end user
-	note : you may require to add SSH using additional command : `--ssh-keys <keyid>`, since image might require the SSH key
-- `--user-data-file` is the path to config file (ymal)
-- `--wait` is the name of the dropet. you can create multiple droplet by add multiple name  
+- `--image` take argument of image ID or image slug
+- `--size` take arguments of the size of the VCPU and ram in form of `s-[number]vcpu-[number]gb`
+- `--region` take argument of the region where you want to create droplet, it should close to the end user
+- `--user-data-file` take the argument of the path to config file (.ymal)
+- `--wait` take argument of the name of droplet. You can add multiple argument to create multiple droplet. 
 	ex `--wait assignment1 assignment2 `
 
 
@@ -257,3 +265,4 @@ SolarWinds. (n.d.). _Using journalctl: The ultimate guide to logging_. Loggly. [
 
 [How to Automate Droplet Setup with cloud-init | DigitalOcean Documentation](https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/)
 
+[pacman - ArchWiki (archlinux.org)](https://wiki.archlinux.org/title/Pacman)
