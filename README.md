@@ -1,167 +1,156 @@
-
-
-
-
-
 ## About `doctl`
 
-### What Is `doctl`? 
-`doctl` is the official Digital Ocean command-line (CLI)
+### What Is `doctl`?
+`doctl` is the official DigitalOcean command-line interface (CLI).
 
->[!note]
-> CLI is text-base interface that allow user to interact with operate system
+> [!note]
+> CLI is a text-based interface that allows users to interact with the operating system.
 
-
-### What Does it do?
-it allows user to interact with the Digital Ocean API via command line interface. User can create, configure, and destroy Digital Ocean resources like Droplets, Kubernetes clusters, firewalls, load balancers, database clusters, domains, and more.
-
-
+### What Does It Do?
+It allows users to interact with the DigitalOcean API via the command line interface. Users can create, configure, and destroy DigitalOcean resources like Droplets, Kubernetes clusters, firewalls, load balancers, database clusters, domains, and more.
 
 ### Why Use `doctl`?
- ``doctl``  allows experienced user to manage faster than go through the web interface. With `doctl`, system administrators can automate competitive task, which is helpful for scaling infrastructure. Moreover, `doctl` is command line interface, it reduce the resource that hardware will use, making it less resource intensive. 
+`doctl` allows experienced users to manage resources faster than using the web interface. With `doctl`, system administrators can automate repetitive tasks, which is helpful for scaling infrastructure. Moreover, since `doctl` is a command-line interface, it reduces the resources that hardware will use, making it less resource-intensive.
 
+## How to Install `doctl`
+This is a step-by-step guide on how to install `doctl` on Arch Linux.
 
+### Step 1: Download `doctl` with `wget`
 
-## How to install `doctl` 
-this is step by step of how to install `doctl` on Arch Linux
-### Step 1 Download `doctl` with `wget`
+1. Download/update the `wget` package:
+    ```bash
+    sudo pacman -Sy wget
+    ```
+2. Download `doctl` using `wget`:
+    ```bash
+    cd ~
+    wget https://github.com/digitalocean/doctl/releases/download/v1.110.0/doctl-1.110.0-linux-amd64.tar.gz
+    ```
+3. Extract the file (binary):
+    ```bash
+    tar xf ~/doctl-1.110.0-linux-amd64.tar.gz
+    ```
+4. Move the file (binary) to the path (bin):
+    ```bash
+    sudo mv ~/doctl /usr/local/bin
+    ```
 
-1. download / update `wget` package 
-```bash 
-sudo pacman -Sy wget
-```
-2.  download `doctl` using `wget`
+**Commands Explanation:**
+- `sudo` temporarily elevates privileges.
+- `pacman` is the package manager (collection of software tools).
+- `sudo pacman -Sy wget`:
+    - `S` syncs to install the package.
+    - `y` updates the package.
+    - `wget` is the package name, used for downloading files from the web.
+- `cd` changes the directory.
+    - `~` represents the home directory.
+- `tar` (tape archive) creates archive files and extracts archive files.
+- `mv` moves files and directories to another directory or renames them.
+
+### Step 2: Create an API Token
+An API token is a string of codes containing data that identifies a specific user.
+
+To use DigitalOcean `doctl`, the API token identifies and confirms your identity to the DigitalOcean API (authentication).
+
+The API determines the permissions for you to perform certain actions, such as creating, deleting, or accessing Droplets.
+
+1. Go to [DigitalOcean | Cloud Infrastructure for Developers](https://www.digitalocean.com/) and log in or sign up.
+2. On the home page, click **API**.
+3. Then click **Generate Token**.
+4. Type the token name and choose the expiration and scopes:
+    - Token Name: Choose the name of the token.
+    - Expiration: Choose when the token expires; it will make the token unable to authenticate to the API after the interval passes.
+    - Scope: Choose the permissions that the token will have:
+        - Custom Scope: Lets you specify the scope from the full list of scopes.
+        - Read Scope: Grants the permission to read all resources.
+        - Full Scope: Grants all permissions.
+5. Copy the token (warning! The token will only be shown once).
+
+### Step 3: Authenticate `doctl` by Using the API
+
+1. To initialize authentication and give the authentication a name:
+    ```bash
+    doctl auth init --context token1
+    ```
+
+**Command Explanation:**
+- `doctl auth init`: Authenticates the account with the token.
+
+**Command Argument:**
+- `--context`: Takes the argument of the token name.
+
+2. Run the command and then paste the token.
+
+> [!note] Multiple API
+You can add multiple accounts and switch between authenticated accounts by using:
 ```bash
-cd ~
-wget https://github.com/digitalocean/doctl/releases/download/v1.110.0/doctl-1.110.0-linux-amd64.tar.gz
+doctl auth switch --context [name]
 ```
-3. extract the file (binary) 
+and
 ```bash
-tar xf ~/doctl-1.110.0-linux-amd64.tar.gz
+doctl auth list
 ```
-4. move file(binary) to the path (bin)
+to see the list of authenticated accounts you have.
+
+### To Confirm `doctl` is Working
+After running the authentication, run:
 ```bash
-sudo mv ~/doctl /usr/local/bin
+doctl account get
 ```
+The result should look like this: <br>
+![Pasted image](Pasted image 20240917195939.png)
 
-commands
-- `sudo` temporarily elevates privileges 
-- `pacman` is package manager (collection of software tool)
-- `sudo pacman -Sy wget`
-	- `S` sync to install package
-	- `y` to update package 
-	- `wget` is package name, and it used from downloading file from the web
-- `cd` change directory
-	- '~' home directory 
-- `tar` (tape archive) create archive file and extract archive file
-- `mv` move, is to move files and directories to other directory or rename it 
+## SSH Key
 
+An SSH key is an access credential used in the SSH protocol. It serves a similar function to usernames and passwords, but SSH keys are mainly used for automated processes and implementing single sign-on by system administrators and power users.
 
+When you create an SSH key, your operating system generates a pair of cryptographic keys: a public key and a private key. The public key can be freely shared and is used to encrypt data that can only be decrypted by the corresponding private key, which is kept secure on your local machine. This key pair is essential for establishing secure, password-less connections to remote servers over the SSH protocol.
 
-### Step 2: Create an API token 
-API token is a string of codes containing a comprehensive data that identifies a specifies user. 
+### To Create an SSH Key in Arch Linux
+1. To create an SSH key, use the command:
+    ```bash
+    ssh-keygen -t ed25519 -f ~/.ssh/doctlkey -C "comment"
+    ```
+2. Type the passphrase (password) for this key (it can be left empty).
 
-In order to use Digital ocean `doctl`, the API token is identified and confirms your identity to Digital Ocean API (authentication).
-
-API determine the permission for you to perform certain action. For example, Create, Delete , access Droplet.
-
-1.  go to [DigitalOcean | Cloud Infrastructure for Developers](https://www.digitalocean.com/) then login or signup 
-
-2. on the home page click **API** 
-![[Pasted image 20240917185310.png]]
-
-4. then click **generate token** 
-![[Pasted image 20240917185825.png]]
-
-6. type the token name and choose the expiration and scopes
-	 - token name :  choose the name of the token
-	- Expiration : choose when the token expires, it will make the token unable to authenticate to API after the interval passes
-	- Scope : choose the permission that allow token to do
-		- custom scope : let you specific the scope from the full list of scope
-		- read scope :  grant the permission to read for all resource
-		- full scope : grant all permission
-	
-![[Pasted image 20240917190812.png|450]]
-
-4. copy the the token (warning! token only show once)
-![[Pasted image 20240917192752.png]]
-
-### Step 3 : Authenticate `doctl` by using  API 
-
-1. to Initializes authentication and give the authentication name
-``` bash
-doctl auth init --context token1
-```
-command
-- `doctl auth init` authenticate the account with token
-
-command argument
-- `--context` take argument of token name 
-
-2. run the command then, paste the token
-
-> [!note]   multiple API
-you can add multiple account and switch authentication account by using 
-doctl auth switch --context [name] and doctl auth list to see the list of authentication you have
-
-
-### to Confirm `doctl` is working
-After run the authentication, run `doctl account get`. The result should look like this: <br>
-![[Pasted image 20240917195939.png]]
-
-
-
-## SSH-key 
-
-what is `SSH-Key`?
-
-
-
-
-
-### How to create SSH-KEY in Linux 
- 1. to create a SSH key use command
-```bash
-`ssh-keygen -t ed25519 -f ~/.ssh/doctlkey -C "commet"
-```
-2. type the passphrase (password )for this  key (can be leave it empty)
-
- command 
- - `ssh-keygen` create public and private key 
- command argument 
-- -t type for encryption
-- -f filename (directory)
-- -C comment
+**Command Explanation:**
+- `ssh-keygen`: Creates public and private keys.
+**Command Arguments:**
+- `-t`: Type of encryption.
+- `-f`: Filename (directory).
+- `-C`: Comment.
 
 ### Upload Public Keys to `doctl`
-to create a droplet using automate configuration (ex .clound-init), it require SSH public key to be accessible to the droplet at the application. 
+To create a Droplet using automated configuration (e.g., cloud-init), it requires the SSH public key to be accessible to the Droplet at the application.
 
-1. by running the command, 
+1. By running the command:
+    ```bash
+    doctl compute ssh-key import git-user --public-key-file /Users/example-user/.ssh/git-user.pub
+    ```
+
+**Command Template:**
 ```bash
-doctl compute ssh-key import git-user --public-key-file /Users/example-user/.ssh/git-user.pub
-
+doctl compute ssh-key import [key-name] --public-key-file [path]
 ```
-command template 
-`doctl compute ssh-key import [key-name] --public-key-file [path]`
-command
-- `doctl compute ssh-key import `  add ssh-key to Digital Ocean account
-command argument 
-- `--public-key-file` : path to public 
+**Command Explanation:**
+- `doctl compute ssh-key import`: Adds the SSH key to the DigitalOcean account.
+**Command Argument:**
+- `--public-key-file`: Path to the public key.
 
-2. check if the ssh-key is imported to Digital Ocean 
-```bash 
-doctl compute ssh-key list
-```
-the command will print the list of ssh-key in Digital Ocean
+2. Check if the SSH key is imported to DigitalOcean:
+    ```bash
+    doctl compute ssh-key list
+    ```
+The command will print the list of SSH keys in DigitalOcean.
 
 
 ## Create Droplet using `doctl`
+---
 
-### To Upload The Custom Image 
-what is image
+### What is image
+Images serve as a blueprint and contain all the necessary components to run a Docker container. This enables reusability and deployment across different hosts.
 
-
-
+### to Upload The Custom Image 
 use command 
 ```
 
@@ -219,10 +208,11 @@ in the example it download the following package
   - neovim, file editor tool that is a fork from vim (better performance)
   - fd, find the entries in file system
   - less, is a linux terminal pager that shows a file's contents one screen at a time
-  - man-db, 
-  - bash-completion
-  - tmux
-
+  - man-db,  is used to create or update the manual page index caches on Linux.
+  - bash-completion provides automatic completion for command-line commands, options, and arguments in the Bash shell, helping to speed up and simplify command entry
+  - tmux allows you to create, manage, and switch between multiple terminal sessions within a single window,
+overall this package are commonly used tool in Linux environment.They enhance productivity and provide additional functionality.
+disable root : disable_root to prevent unauthorized access by restricting the ability to log in or perform operations as the root user.
 
 
 ### Create Arch Linux Droplet with Clound-init (require .ymal)
@@ -256,7 +246,7 @@ nvim config
 ```
 2. in the config file set the SSH connection 
 ```txt
-Host as1 #host name, can be anything
+Host assigment1 #host name, can be anything
   HostName 143.110.232.242 # ip address of droplet you are trying to connect
   User arch # user
   PreferredAuthentications publickey
@@ -266,7 +256,7 @@ Host as1 #host name, can be anything
 ```
 3. connect to your new droplet
 ```bash
-ssh as1
+ssh assigment1
 ```
 
 
@@ -290,26 +280,28 @@ ssh as1
 ## Source
 
 
-SolarWinds. (n.d.). _Using journalctl: The ultimate guide to logging_. Loggly. [https://www.loggly.com/ultimate-guide/using-journalctl/](https://www.loggly.com/ultimate-guide/using-journalctl/)
+SolarWinds. (n.d.). Using journalctl: The ultimate guide to logging. Loggly. Retrieved from https://www.loggly.com/ultimate-guide/using-journalctl/
 
-[How to Destroy a Droplet from the DigitalOcean Control Panel | DigitalOcean Documentation](https://docs.digitalocean.com/products/droplets/how-to/destroy/)
+DigitalOcean. (n.d.). How to destroy a droplet from the DigitalOcean control panel. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/droplets/how-to/destroy/
 
-[How to Upload Custom Images | DigitalOcean Documentation](https://docs.digitalocean.com/products/custom-images/how-to/upload/)
+DigitalOcean. (n.d.). How to upload custom images. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/custom-images/how-to/upload/
 
-[How to Create Droplets from Custom Images | DigitalOcean Documentation](https://docs.digitalocean.com/products/custom-images/how-to/create-droplets/)
+DigitalOcean. (n.d.). How to create droplets from custom images. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/custom-images/how-to/create-droplets/
 
-[doctl compute image | DigitalOcean Documentation](https://docs.digitalocean.com/reference/doctl/reference/compute/image/)
+DigitalOcean. (n.d.). doctl compute image. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/reference/doctl/reference/compute/image/
 
-[doctl compute droplet | DigitalOcean Documentation](https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/)
+DigitalOcean. (n.d.). doctl compute droplet. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/
 
-[doctl compute droplet create | DigitalOcean Documentation](https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/create/)
+DigitalOcean. (n.d.). doctl compute droplet create. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/create/
 
-[Installing snap on Arch Linux | Snapcraft documentation](https://snapcraft.io/docs/installing-snap-on-arch-linux)
+Snapcraft. (n.d.). Installing snap on Arch Linux. Snapcraft Documentation. Retrieved from https://snapcraft.io/docs/installing-snap-on-arch-linux
 
-[How to Automate Droplet Setup with cloud-init | DigitalOcean Documentation](https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/)
+DigitalOcean. (n.d.). How to automate droplet setup with cloud-init. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/
 
-[pacman - ArchWiki (archlinux.org)](https://wiki.archlinux.org/title/Pacman)
+Arch Linux. (n.d.). Pacman. ArchWiki. Retrieved from https://wiki.archlinux.org/title/Pacman
 
-[Cloud config examples - cloud-init 24.3.1 documentation (cloudinit.readthedocs.io)](https://cloudinit.readthedocs.io/en/latest/reference/examples.html)
+Cloud-init. (n.d.). Cloud config examples. Cloud-init Documentation. Retrieved from https://cloudinit.readthedocs.io/en/latest/reference/examples.html
 
-[2420-notes/week-three.md · main · cit_2420 / 2420-notes-F24 · GitLab](https://gitlab.com/cit2420/2420-notes-f24/-/blob/main/2420-notes/week-three.md)
+GitLab. (n.d.). 2420-notes/week-three.md. Retrieved from https://gitlab.com/cit2420/2420-notes-f24/-/blob/main/2420-notes/week-three.md
+
+Cyberciti. (n.d.). Mandb command. Linux Bash Shell Scripting Tutorial Wiki. Retrieved from https://bash.cyberciti.biz/guide/Mandb_command
