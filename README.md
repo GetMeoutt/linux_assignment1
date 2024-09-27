@@ -156,8 +156,12 @@ the command will print the list of ssh-key in Digital Ocean
 
 
 ## Create Droplet using `doctl`
----
+
 ### To Upload The Custom Image 
+what is image
+
+
+
 use command 
 ```
 
@@ -201,7 +205,7 @@ disable_root: true
 ```
 3. save and quit `:wq` 
 
-**explanation of .ymal file**
+**explanation of .ymal file** <br>
 user : store the user information for the new droplet that you are going to create
 - name : the user's login name 
 - group : optional, Additional groups to add the user to
@@ -273,7 +277,7 @@ ssh as1
 
 
 
-### Extra Commands I find useful during this assignment 
+## Extra Commands I find useful during this assignment 
 - `doctl compute image list` show the list of images 
 - `doctl compute droplet list` show the list of droplet 
 - `doctl compute droplet delete <dropletID>` delete droplet 
@@ -283,8 +287,8 @@ ssh as1
 
 
 
-### Source
----
+## Source
+
 
 SolarWinds. (n.d.). _Using journalctl: The ultimate guide to logging_. Loggly. [https://www.loggly.com/ultimate-guide/using-journalctl/](https://www.loggly.com/ultimate-guide/using-journalctl/)
 
