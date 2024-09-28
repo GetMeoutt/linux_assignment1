@@ -66,6 +66,7 @@ To create an API token for DigitalOcean::
 3. Click **Generate Token**.
    
 ![alt text](./asset/Pasted%20image%2020240917190812.png)
+Personal Acess token information<br>
     - Token Name: Choose the name of the token.<br>
     - Expiration: Choose when the token expires; it will make the token unable to authenticate to the API after the interval passes.<br>
     - Scope: Choose the permissions that the token will have:<br>
@@ -76,6 +77,8 @@ To create an API token for DigitalOcean::
 ![alt text](./asset/Pasted%20image%2020240917192752.png)
 
 ### Step 3: Authenticate `doctl` by Using the API
+
+in order to connect the token to doctl, you need to authenticate the API with doctl by doing the following step <br>
 
 1. To initialize authentication and give the authentication a name:
     ```bash
@@ -90,8 +93,8 @@ To create an API token for DigitalOcean::
 
 2. Run the command and then paste the token.
 
-> [!note] Multiple API
->You can add multiple accounts and switch between authenticated accounts by using:
+Multiple API <br>
+You can add multiple accounts and switch between authenticated accounts by using:
 ```bash
 doctl auth switch --context [name]
 ```
@@ -151,7 +154,12 @@ doctl compute ssh-key import [key-name] --public-key-file [path]
 The command will print the list of SSH keys in DigitalOcean.
 
 
-## Create Droplet using `doctl`
+## Preparation for Create Droplet with Cloud init
+
+requirements 
+1. image
+2. configfile for clound init (.ymal)
+3. droplet 
 
 ### What is image
 Images is similar to a blueprint and contain all the necessary components to run a Docker container. it can be reused and deployed by any host  [^3]
@@ -173,12 +181,22 @@ command `doctl compute create` require `--region, --image-url`[^3]
 
 
 ### Create Config File For Clound Init
+
+#### what is cloud init
+The cloud-init tool automates the setup of cloud instances when the system starts. It can be used to set the hostname, install packages, and run scripts on the instance.
+
+
+
+
+#### what is .ymal
 .ymal file is human readable text, often used as config file. In the following step, we use the Ymal file to create and set the config for cloud-inti to create a droplet. [^17]
+
+
 1. on **CLI** create file .yaml (can be anywhere)
 ```bash
 nvim droplet_setting.ymal
 ```
-2. the content of droplet_setting.ymal 
+1. the content of droplet_setting.ymal 
 ```ymal
 #cloud-config
 users:
@@ -200,7 +218,7 @@ packages:
   - tmux
 disable_root: true
 ```
-3. save and quit `:wq` 
+1. save and quit `:wq` 
 
 **explanation of .ymal file** [^17]<br>
 user : store the user information for the new droplet that you are going to create
