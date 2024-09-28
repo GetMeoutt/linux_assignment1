@@ -65,7 +65,8 @@ To create an API token for DigitalOcean::
 
 3. Click **Generate Token**.
    
-![alt text](./asset/Pasted%20image%2020240917190812.png)
+![alt text](./asset/Pasted%20image%2020240917190812.png)<br>
+<br>
 Personal Acess token information<br>
     - Token Name: Choose the name of the token.<br>
     - Expiration: Choose when the token expires; it will make the token unable to authenticate to the API after the interval passes.<br>
@@ -124,7 +125,7 @@ When you create an SSH key, your computer makes a pair of keys: a public key and
 2. Type the passphrase (password) for this key (it can be left empty).
 
 **Command Explanation:**
-- `ssh-keygen`: Creates public and private keys.
+- `ssh-keygen`: Creates public and private keys.<br>
 **Command Arguments:**
 - `-t`: Type of encryption.
 - `-f`: Filename (directory).
@@ -143,7 +144,7 @@ To create a Droplet using automated configuration (e.g., cloud-init), it require
 doctl compute ssh-key import [key-name] --public-key-file [path]
 ```
 **Command Explanation:**
-- `doctl compute ssh-key import`: Adds the SSH key to the DigitalOcean account.
+- `doctl compute ssh-key import`: Adds the SSH key to the DigitalOcean account.<br>
 **Command Argument:**
 - `--public-key-file`: Path to the public key.
 
@@ -226,7 +227,7 @@ user : store the user information for the new droplet that you are going to crea
 - group : optional, Additional groups to add the user to
 - shell : is the default shell path for user
 - sudo : accept a sudo rules string( in this example is everyone can use without password)
-- ssh-authorized-keys: a public key, for user to be able to connect to the droplet with private key
+- ssh-authorized-keys: a public key, for user to be able to connect to the droplet with private key <br>
 Packages: package is an archive with software file, configuration files and dependencies
 in the example it downloads the following packages
   - ripgrep, search tool
@@ -274,7 +275,7 @@ However, before connecting to the Droplet, you need to create a configuration fi
 ``` bash
 nvim config
 ```
-1. in the config file, set the SSH connection 
+2. in the config file, set the SSH connection 
 ```txt
 Host assigment1 #host name, can be anything
   HostName 143.110.232.242 # ip address of droplet you are trying to connect
@@ -284,7 +285,7 @@ Host assigment1 #host name, can be anything
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 ```
-1. connect to your new droplet
+3. connect to your new droplet
 ```bash
 ssh assigment1
 ```
