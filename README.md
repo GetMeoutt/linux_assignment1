@@ -6,12 +6,12 @@
 > [!note]
 > CLI is a text-based interface that allows users to interact with the operating system. 
 
-[^2]
+[^1]
 ### What Does It Do?
 It allows users to interact with the DigitalOcean API via the command line interface. Users can create, configure, and destroy DigitalOcean resources like Droplets, Kubernetes clusters, firewalls, load balancers, database clusters, domains, and more.[^11]
 
 ### Why Use `doctl`?
-`doctl` allows experienced users to manage resources faster than using the web interface. With `doctl`, system administrators can automate repetitive tasks, which is helpful for scaling infrastructure. Moreover, since `doctl` is a command-line interface, it reduces the resources that hardware will use, making it less resource-intensive.[^11]
+`doctl` allows experienced users to manage resources faster than using the web interface. With `doctl`, system administrators can automate repetitive tasks, which is helpful for scaling infrastructure. Moreover, since `doctl` is a command-line interface, it reduces the resources that hardware will use, making it less resource-intensive.[^7]
 
 ## How to Install `doctl`
 This is a step-by-step guide on how to install `doctl` on Arch Linux.
@@ -53,7 +53,7 @@ An API token is a string of codes containing data that identifies a specific use
 
 To use DigitalOcean `doctl`, the API token identifies and confirms your identity to the DigitalOcean API (authentication).
 
-The API defines the permissions for you to perform certain actions, such as creating, deleting, or accessing Droplets.
+The API defines the permissions for you to perform certain actions, such as creating, deleting, or accessing Droplets.[^16]
 
 To create an API token for DigitalOcean:: 
 1. Go to [DigitalOcean | Cloud Infrastructure for Developers](https://www.digitalocean.com/) and log in or sign up.
@@ -66,12 +66,12 @@ To create an API token for DigitalOcean::
 3. Click **Generate Token**.
    
 ![alt text](./asset/Pasted%20image%2020240917190812.png)
-    - Token Name: Choose the name of the token.
-    - Expiration: Choose when the token expires; it will make the token unable to authenticate to the API after the interval passes.
-    - Scope: Choose the permissions that the token will have:
-        - Custom Scope: Lets you specify the scope from the full list of scopes.
-        - Read Scope: Grants the permission to read all resources.
-        - Full Scope: Grants all permissions.
+    - Token Name: Choose the name of the token.<br>
+    - Expiration: Choose when the token expires; it will make the token unable to authenticate to the API after the interval passes.<br>
+    - Scope: Choose the permissions that the token will have:<br>
+        - Custom Scope: Lets you specify the scope from the full list of scopes.<br>
+        - Read Scope: Grants the permission to read all resources.<br>
+        - Full Scope: Grants all permissions.<br>
 1. Copy the token (warning! The token will only be shown once).
 ![alt text](./asset/Pasted%20image%2020240917192752.png)
 
@@ -91,7 +91,7 @@ To create an API token for DigitalOcean::
 2. Run the command and then paste the token.
 
 > [!note] Multiple API
-You can add multiple accounts and switch between authenticated accounts by using:
+>You can add multiple accounts and switch between authenticated accounts by using:
 ```bash
 doctl auth switch --context [name]
 ```
@@ -111,7 +111,7 @@ The result should look like this: <br>
 
 ## SSH Key
 
-When you create an SSH key, your computer makes a pair of keys: a public key and a private key. The public key can be shared and is used to encrypt data, while the private key is kept secure on your computer and is used to decrypt data. This key pair is used to securely connect to remote servers over the SSH protocol, without needing to use passwords.
+When you create an SSH key, your computer makes a pair of keys: a public key and a private key. The public key can be shared and is used to encrypt data, while the private key is kept secure on your computer and is used to decrypt data. This key pair is used to securely connect to remote servers over the SSH protocol, without needing to use passwords.[^13]
 
 ### To Create an SSH Key in Arch Linux
 1. To create an SSH key, use the command:
@@ -128,7 +128,7 @@ When you create an SSH key, your computer makes a pair of keys: a public key and
 - `-C`: Comment.
 
 ### Upload Public Keys to `doctl`
-To create a Droplet using automated configuration (e.g., cloud-init), it requires the SSH public key to be accessible to the Droplet at the application.
+To create a Droplet using automated configuration (e.g., cloud-init), it requires the SSH public key to be accessible to the Droplet at the application. 
 
 1. By running the command:
     ```bash
@@ -154,7 +154,7 @@ The command will print the list of SSH keys in DigitalOcean.
 ## Create Droplet using `doctl`
 
 ### What is image
-Images serve as a blueprint and contain all the necessary components to run a Docker container. it can be reused and deployed by any host  [^1]
+Images is similar to a blueprint and contain all the necessary components to run a Docker container. it can be reused and deployed by any host  [^3]
 
 
 ### To Upload The Custom Image 
@@ -173,7 +173,7 @@ command `doctl compute create` require `--region, --image-url`[^3]
 
 
 ### Create Config File For Clound Init
-.ymal file is human readable text, often used as config file. In the following step, we use the Ymal file to create and set the config for cloud-inti to create a droplet. 
+.ymal file is human readable text, often used as config file. In the following step, we use the Ymal file to create and set the config for cloud-inti to create a droplet. [^17]
 1. on **CLI** create file .yaml (can be anywhere)
 ```bash
 nvim droplet_setting.ymal
@@ -202,7 +202,7 @@ disable_root: true
 ```
 3. save and quit `:wq` 
 
-**explanation of .ymal file** <br>
+**explanation of .ymal file** [^17]<br>
 user : store the user information for the new droplet that you are going to create
 - name : the user's login name 
 - group : optional, Additional groups to add the user to
@@ -224,7 +224,7 @@ overall this package are commonly used tool in Linux environment.
 disable_root: Prevent unauthorized access by restricting the ability to log in or perform operations as the root user.[^10]
 
 
-### Create Arch Linux Droplet with Clound-init (require .ymal)[^6]
+### Create Arch Linux Droplet with Clound-init (require .ymal)[^4][^8]
 1. get the image id of archlinux
 ```bash
 doctl compute image list
@@ -251,7 +251,7 @@ command arguments
 ### SSH to New Droplet
 this is a process where you connect to your new droplet by using the command `ssh` to connect to the new droplet by private key.
 
-However, before connecting to the Droplet, you need to create a configuration file to specify the SSH protocol settings and connection details. This configuration file simplifies the connection process by storing all necessary options, such as the IP address, user name, and path to the private key." 
+However, before connecting to the Droplet, you need to create a configuration file to specify the SSH protocol settings and connection details. This configuration file simplifies the connection process by storing all necessary options, such as the IP address, user name, and path to the private key." [^18]
 1. in the directory of `/ssh` create the file name `config`
 ``` bash
 nvim config
@@ -280,7 +280,8 @@ in the config file
 - Hostname is the IP address of the droplet you trying to connect
 - PreferredAuthentications is a authentications method, in this example we use a public key
 - IdentifyFile is the path of public key
-- 
+- StrictHostKeyChecking is Automatically accepts new or changed host keys without prompting, making SSH connections easier but less secure.
+- UserKnownHostsFile /dev/null: Disables saving and checking host keys by directing SSH to use a file that discards all data, effectively turning off host key verification.
 
 
 
@@ -304,33 +305,40 @@ After you connect to the new droplet, you will see on the terminal that you have
 ## Source
 
 
-[^2]:SolarWinds. (n.d.). Using journalctl: The ultimate guide to logging. Loggly. Retrieved from https://www.loggly.com/ultimate-guide/using-journalctl/
+[^1]:SolarWinds. (n.d.). Using journalctl: The ultimate guide to logging. Loggly. Retrieved from https://www.loggly.com/ultimate-guide/using-journalctl/
 
-DigitalOcean. (n.d.). How to destroy a droplet from the DigitalOcean control panel. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/droplets/how-to/destroy/
+[^2]:DigitalOcean. (n.d.). How to destroy a droplet from the DigitalOcean control panel. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/droplets/how-to/destroy/
 
 [^3]:DigitalOcean. (n.d.). How to upload custom images. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/custom-images/how-to/upload/
 
-DigitalOcean. (n.d.). How to create droplets from custom images. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/custom-images/how-to/create-droplets/
+[^4]:DigitalOcean. (n.d.). How to create droplets from custom images. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/custom-images/how-to/create-droplets/
 
-[^4]:DigitalOcean. (n.d.). doctl compute image. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/reference/doctl/reference/compute/image/
+[^5]:DigitalOcean. (n.d.). doctl compute image. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/reference/doctl/reference/compute/image/
 
-DigitalOcean. (n.d.). doctl compute droplet. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/
+[^6]:DigitalOcean. (n.d.). doctl compute droplet. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/
 
-[^11]:DigitalOcean. (2024, June 21). _doctl command line interface (CLI)_. DigitalOcean Documentation. Retrieved September 27, 2024, from [https://docs.digitalocean.com/reference/doctl/](https://docs.digitalocean.com/reference/doctl/)
+[^7]:DigitalOcean. (2024, June 21). _doctl command line interface (CLI)_. DigitalOcean Documentation. Retrieved September 27, 2024, from [https://docs.digitalocean.com/reference/doctl/](https://docs.digitalocean.com/reference/doctl/)
 
-[^5]:DigitalOcean. (n.d.). doctl compute droplet create. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/create/
-
-
-[^6]:DigitalOcean. (n.d.). How to automate droplet setup with cloud-init. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/
-
-[^7]:Arch Linux. (n.d.). Pacman. ArchWiki. Retrieved from https://wiki.archlinux.org/title/Pacman
-
-[^8]:Cloud-init. (n.d.). Cloud config examples. Cloud-init Documentation. Retrieved from https://cloudinit.readthedocs.io/en/latest/reference/examples.html
+[^8]:DigitalOcean. (n.d.). doctl compute droplet create. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/create/
 
 
-[^9]:Cyberciti. (n.d.). Mandb command. Linux Bash Shell Scripting Tutorial Wiki. Retrieved from https://bash.cyberciti.biz/guide/Mandb_command
+[^9]:DigitalOcean. (n.d.). How to automate droplet setup with cloud-init. DigitalOcean Documentation. Retrieved from https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/
 
-[^9]:SSH Communications Security. (n.d.). _SSH key management: Best practices and pitfalls_. SSH Academy. Retrieved September 27, 2024, from [https://www.ssh.com/academy/ssh-keys](https://www.ssh.com/academy/ssh-keys)
+[^10]:Arch Linux. (n.d.). Pacman. ArchWiki. Retrieved from https://wiki.archlinux.org/title/Pacman
 
-[^1]:[Containers and Images | DigitalOcean Documentation](https://docs.digitalocean.com/products/images/)
-[^10]: Kerrisk, M. (2024, April 5). _mandb(8) — Linux manual page_. Man7.org. Retrieved September 27, 2024, from [https://man7.org/linux/man-pages/man8/mandb.8.html](https://man7.org/linux/man-pages/man8/mandb.8.html)
+[^11]:Cloud-init. (n.d.). Cloud config examples. Cloud-init Documentation. Retrieved from https://cloudinit.readthedocs.io/en/latest/reference/examples.html
+
+
+[^12]:Cyberciti. (n.d.). Mandb command. Linux Bash Shell Scripting Tutorial Wiki. Retrieved from https://bash.cyberciti.biz/guide/Mandb_command
+
+[^13]:SSH Communications Security. (n.d.). _SSH key management: Best practices and pitfalls_. SSH Academy. Retrieved September 27, 2024, from [https://www.ssh.com/academy/ssh-keys](https://www.ssh.com/academy/ssh-keys)
+
+[^14]:[Containers and Images | DigitalOcean Documentation](https://docs.digitalocean.com/products/images/)
+
+[^15]: Kerrisk, M. (2024, April 5). _mandb(8) — Linux manual page_. Man7.org. Retrieved September 27, 2024, from [https://man7.org/linux/man-pages/man8/mandb.8.html](https://man7.org/linux/man-pages/man8/mandb.8.html)
+
+[^16]:DigitalOcean. (n.d.). [Create a personal access token](https://docs.digitalocean.com/reference/api/create-personal-access-token/). DigitalOcean Documentation. Retrieved September 27, 2024, from [https://docs.digitalocean.com/reference/api/create-personal-access-token/](https://docs.digitalocean.com/reference/api/create-personal-access-token/)
+
+[^17]:Cloud-init. (n.d.). [Cloud config examples](https://cloudinit.readthedocs.io/en/latest/reference/examples.html). Read the Docs. Retrieved September 27, 2024, from [https://cloudinit.readthedocs.io/en/latest/reference/examples.html](https://cloudinit.readthedocs.io/en/latest/reference/examples.html)
+
+[^18]: Linuxize. (2020, February 8). [Using the SSH config file](https://linuxize.com/post/using-the-ssh-config-file/). Linuxize. Retrieved September 27, 2024, from [https://linuxize.com/post/using-the-ssh-config-file/](https://linuxize.com/post/using-the-ssh-config-file/)
