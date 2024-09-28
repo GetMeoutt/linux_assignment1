@@ -64,6 +64,7 @@ To create an API token for DigitalOcean::
 
 
 3. Click **Generate Token**.
+   
 ![alt text](./asset/Pasted%20image%2020240917190812.png)
     - Token Name: Choose the name of the token.
     - Expiration: Choose when the token expires; it will make the token unable to authenticate to the API after the interval passes.
@@ -71,7 +72,7 @@ To create an API token for DigitalOcean::
         - Custom Scope: Lets you specify the scope from the full list of scopes.
         - Read Scope: Grants the permission to read all resources.
         - Full Scope: Grants all permissions.
-5. Copy the token (warning! The token will only be shown once).
+1. Copy the token (warning! The token will only be shown once).
 ![alt text](./asset/Pasted%20image%2020240917192752.png)
 
 ### Step 3: Authenticate `doctl` by Using the API
@@ -209,7 +210,7 @@ user : store the user information for the new droplet that you are going to crea
 - sudo : accept a sudo rules string( in this example is everyone can use without password)
 - ssh-authorized-keys: a public key, for user to be able to connect to the droplet with private key
 Packages: package is an archive with software file, configuration files and dependencies
-in the example it download the following package
+in the example it downloads the following packages
   - ripgrep, search tool
   - rsync, file copy tool which can copy from to/from remote host
   - neovim, file editor tool that is a fork from vim (better performance)
@@ -219,7 +220,8 @@ in the example it download the following package
   - bash-completion is a package that contain a collection of command line command completions for the shell
   - tmux is a package that allows you to create, manage, and switch between multiple terminal sessions within a single window,
 overall this package are commonly used tool in Linux environment.
-disable root : disable_root to prevent unauthorized access by restricting the ability to log in or perform operations as the root user [^10]
+
+disable_root: Prevent unauthorized access by restricting the ability to log in or perform operations as the root user.[^10]
 
 
 ### Create Arch Linux Droplet with Clound-init (require .ymal)[^6]
@@ -247,12 +249,14 @@ command arguments
 
 
 ### SSH to New Droplet
-this is a process where you connect to your new droplet by using the command `ssh` to connect to the new droplet by private key 
+this is a process where you connect to your new droplet by using the command `ssh` to connect to the new droplet by private key.
+
+However, before connecting to the Droplet, you need to create a configuration file to specify the SSH protocol settings and connection details. This configuration file simplifies the connection process by storing all necessary options, such as the IP address, user name, and path to the private key." 
 1. in the directory of `/ssh` create the file name `config`
 ``` bash
 nvim config
 ```
-2. in the config file, set the SSH connection 
+1. in the config file, set the SSH connection 
 ```txt
 Host assigment1 #host name, can be anything
   HostName 143.110.232.242 # ip address of droplet you are trying to connect
@@ -262,7 +266,7 @@ Host assigment1 #host name, can be anything
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 ```
-3. connect to your new droplet
+1. connect to your new droplet
 ```bash
 ssh assigment1
 ```
@@ -271,7 +275,7 @@ commands
 - `nvim` file editor, to create a file in config
 - `ssh`, login to the remote machine
 
-in config file
+in the config file
 - host is a name that the user use to connect to the new droplet (ssh nameOftheDroplet)
 - Hostname is the IP address of the droplet you trying to connect
 - PreferredAuthentications is a authentications method, in this example we use a public key
